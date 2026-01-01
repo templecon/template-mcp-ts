@@ -11,7 +11,15 @@ export default defineConfig({
             entry: "src/index.ts",
             formats: ["es"],
         },
+        rollupOptions: {
+            output: {
+                manualChunks() {
+                    return "monochunked";
+                },
+            },
+        },
         sourcemap: true,
+        chunkSizeWarningLimit: undefined,
     },
     clearScreen: false,
 });
