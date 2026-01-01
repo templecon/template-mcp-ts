@@ -5,31 +5,33 @@ const mcp = new Muppet<{ Variables: { surname: string } }>({
     name: "muppet-hono",
     version: "0.0.1",
 });
-mcp.prompt({
-    name: "greet",
-    description: "Greet a person",
-    arguments:{
-        word:{
-            validation:z.string().optional(),
-            completion:()=>["Hello","Hi","Greetings","Howdy"]
-        }
+mcp.prompt(
+    {
+        name: "greet",
+        description: "Greet a person",
+        arguments: {
+            word: {
+                validation: z.string().optional(),
+                completion: () => ["Hello", "Hi", "Greetings", "Howdy"],
+            },
+        },
+        title: "Greet a person",
     },
-    title: "Greet a person",
-},
-c=>{
-    const word = c.message.params.arguments.word || "Hello";
-    return {
-        messages:[
-            {
-                role:"user",
-                content:{
-                    type:"text",
-                    text:`Greet a person using the word ${word}.`,
-                }
-            }
-        ]
-    }
-})
+    (c) => {
+        const word = c.message.params.arguments.word || "Hello";
+        return {
+            messages: [
+                {
+                    role: "user",
+                    content: {
+                        type: "text",
+                        text: `Greet a person using the word ${word}.`,
+                    },
+                },
+            ],
+        };
+    },
+);
 mcp.tool(
     {
         name: "hello",
@@ -48,7 +50,7 @@ mcp.tool(
                 },
             ],
         };
-    }
+    },
 );
 
 export default mcp;

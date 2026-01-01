@@ -6,9 +6,9 @@
     "main": "./src/index.ts",
     "send_metrics": false,
     "observability": {
-        "enabled": true,
+        "enabled": true
     },
     "placement": {
-        "mode": "smart",
-    },
+        "mode": "smart"
+    }
 }
