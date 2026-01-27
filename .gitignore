@@ -42,3 +42,4 @@ worker-configuration.d.ts
 .env.local
 .env.*.local
 !.env
+coverage/

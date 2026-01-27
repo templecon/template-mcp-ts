@@ -1,14 +1,14 @@
 import { StreamableHTTPTransport } from "@hono/mcp";
 import { Hono } from "hono";
-import mcp from "./mcp";
+import { createMcpServer } from "./mcp";
 
 let app = new Hono();
 
 app = app.all("/mcp", async (c) => {
+    const mcp = createMcpServer();
     const transport = new StreamableHTTPTransport({
         sessionIdGenerator: undefined,
     });
-    transport.handleRequest;
     await mcp.connect(transport);
     return transport.handleRequest(c);
 });
