@@ -1,29 +1,35 @@
-# MCP server Template
+# Hono OpenAPI Template
 
-- Information: This document is for both humans and AI to understand the project. If you need more details, make a [AGENTS.md](https://agents.md/) file.
-  Welcome to your super-cool Streamable HTTP MCP server starter! 🚀✨
+Welcome to super-cool Hono + OpenAPI starter! 🚀✨
 
 ## Features
 
 - [Hono](https://hono.dev/) web framework
+- [OpenAPI](https://www.openapis.org/) documentation with [hono-openapi](https://honohub.dev/docs/openapi)
 - [Zod](https://zod.dev/) schema validation
-- [Muppet](https://www.muppet.dev/docs/server) and [@hono/mcp](https://honohub.dev/docs/hono-mcp) for building MCP servers
+- [Scalar](https://github.com/scalar/scalar) API docs UI
 - Ready for Cloudflare Workers with Wrangler
 
 ## Getting Started
 
-To get started with this MCP server template, follow these steps:
+```sh
+# Install dependencies
+pnpm install
 
-1. **Install Dependencies**: Run `pnpm install` to install all necessary packages.
-2. **Run the Server Locally**: Use `pnpm run dev` to start the server in development mode.
-3. **Deploy to Cloudflare Workers**: Use `pnpm run deploy` to deploy your MCP server to Cloudflare Workers.
+# Run the development server
+pnpm dev
 
-## Project Structure
+# Format code
+pnpm format
 
-- `src/mcp.ts`: The main MCP server implementation.
-- `wrangler.toml`: Configuration file for Cloudflare Workers deployment.
-- `package.json`: Project metadata and scripts.
+# Build the project
+pnpm build
+```
+
+## API Endpoints
+
+Check out `/docs`. Generated docs are at `/docs`.
 
 ## License
 
-This project is licensed under the Apache-2.0 License. For more details, see the [LICENSE](./LICENSE) file.
+Apache-2.0, see [LICENSE](./LICENSE) for details.
