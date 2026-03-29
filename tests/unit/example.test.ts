@@ -1,18 +1,36 @@
 import { describe, expect, it } from "vitest";
 import { testClient } from "hono/testing";
-import { router } from "@/route";
-describe("example test", () => {
-    const client = testClient(router);
-    it.concurrent("should throw on invalid request", async () => {
-        //@ts-expect-error Invalid request, should return an error
-        const resp = await client.index.$post();
-        expect(await resp.text()).not.include("Hello");
-    });
-    it.concurrent("should return a greeting message", async () => {
-        const resp = await client.index.$post({
-            json: { name: "Alice" },
-        });
-        const data = await resp.json();
-        expect(data.hello).include("Alice");
-    });
+import app from "@/index";
+
+describe("index.ts - app configuration", () => {
+    const client = testClient(app);
+
+    it.concurrent(
+        "should respond with CORS headers on safe methods",
+        async () => {
+            const resp = await client.index.$get(
+                {},
+                {
+                    headers: {
+                        Origin: "http://example.com",
+                        "Access-Control-Request-Method": "POST",
+                        "Access-Control-Request-Headers":
+                            "Content-Type, Authorization",
+                    },
+                }
+            );
+            expect(resp.status).toBe(200);
+            expect(resp.headers.get("Access-Control-Allow-Origin")).toBe(
+                "http://example.com"
+            );
+        }
+    );
+    it.concurrent(
+        "should not respond as CORS on requests without Origin header",
+        async () => {
+            const resp = await client.index.$get({});
+            expect(resp.status).toBe(200);
+            expect(resp.headers.get("Access-Control-Allow-Origin")).toBeNull();
+        }
+    );
 });

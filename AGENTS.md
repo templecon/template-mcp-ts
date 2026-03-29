@@ -5,9 +5,11 @@ All agents, such as Claude Code, should keep `**/AGENTS.md` in mind.
 
 ## Project Type
 
-This is a **Hono backend server template** for Cloudflare Workers. It provides a minimal setup for building API servers with Hono, including:
+This is an **MCP Server template** for building Model Context Protocol servers with TypeScript. It provides:
 
-- Zod validation
+- MCP SDK integration for tools and prompts
+- Hono web framework for HTTP transport
+- Zod validation for MCP tool schemas
 - Vitest with Cloudflare worker pool for testing
 
 ## Development Commands

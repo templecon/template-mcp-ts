@@ -1,48 +1,44 @@
-import { router } from "@/route";
-import { Scalar } from "@scalar/hono-api-reference";
+import { app as mcpServer } from "@/route";
+import { StreamableHTTPTransport } from "@hono/mcp";
 import { Hono } from "hono";
-import { openAPIRouteHandler } from "hono-openapi";
-import { cors } from "hono/cors";
+
 /**
  * @fileoverview
  * This is the main entry point of the Hono application. It sets up the routing and middleware for the application.
  * Don't make this file too large. If you need to add more routes, create separate route files and import them here.
  */
 
-const corsMiddleware = cors({
-    origin(origin) {
-        if (!import.meta.env.DEV) {
-            throw new Error("CORS is only allowed in development mode.");
+const transport = new StreamableHTTPTransport();
+const app = new Hono()
+    .use("*", async (c, next) => {
+        // CORS allow all
+        const requestedOrigin = c.req.header("Origin");
+        if (requestedOrigin) {
+            c.header("Access-Control-Allow-Origin", requestedOrigin);
         }
-        return origin;
-    },
-});
-const app = new Hono().use("*", corsMiddleware).route("/", router);
-
-// OpenAPI-related
-app.get(
-    "/openapi.json",
-    openAPIRouteHandler(app, {
-        documentation: {
-            info: {
-                title: "Hono API",
-                version: "1.0.0",
-                description: "Greeting API",
-            },
-            servers: [
-                { url: "http://localhost:5178", description: "Local Server" },
-            ],
-        },
+        c.header(
+            "Access-Control-Allow-Methods",
+            "GET, POST, PUT, DELETE, PATCH"
+        );
+        const requestedHeaders = c.req.header("Access-Control-Request-Headers");
+        if (requestedHeaders) {
+            c.header("Access-Control-Allow-Headers", requestedHeaders);
+            c.header("Access-Control-Expose-Headers", requestedHeaders);
+        }
+        if (c.req.method === "OPTIONS") {
+            c.status(204);
+            return c.newResponse(null);
+        }
+        return next();
     })
-);
-app.get(
-    "/docs",
-    Scalar({
-        defaultHttpClient: {
-            clientKey: "fetch",
-            targetKey: "js",
-        },
-        url: "/openapi.json",
+    .all("/mcp", async (c) => {
+        if (!mcpServer.isConnected()) {
+            // Connect the mcp with the transport
+            await mcpServer.connect(transport);
+        }
+        return transport.handleRequest(c);
     })
-);
+    .get("/", (c) => {
+        return c.text("Hello, World! This is MCP server.");
+    });
 export default app;

@@ -28,5 +28,13 @@
             }
         }
     ],
+    "rules": {
+        "@typescript-eslint/require-await": "off"
+    },
+    "options": {
+        "typeAware": true,
+        "typeCheck": true,
+        "reportUnusedDisableDirectives": "error"
+    },
     "extends": ["scripts/linter/oxlint-eslint.json"]
 }
