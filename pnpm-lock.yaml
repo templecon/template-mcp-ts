@@ -26,7 +26,7 @@ importers:
         version: 2.3.10
       '@cloudflare/vite-plugin':
         specifier: ^1.17.1
-        version: 1.17.1(vite@7.3.0(@types/node@24.4.0)(yaml@2.8.1))(workerd@1.20251210.0)(wrangler@4.54.0)
+        version: 1.17.1(vite@7.3.0(@types/node@25.0.9)(yaml@2.8.1))(workerd@1.20251210.0)(wrangler@4.54.0)
       simple-git-hooks:
         specifier: ^2.13.1
         version: 2.13.1
@@ -35,7 +35,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: ^7.3.0
-        version: 7.3.0(@types/node@24.4.0)(yaml@2.8.1)
+        version: 7.3.0(@types/node@25.0.9)(yaml@2.8.1)
       wrangler:
         specifier: ^4.54.0
         version: 4.54.0
@@ -752,8 +752,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@24.4.0':
-    resolution: {integrity: sha512-gUuVEAK4/u6F9wRLznPUU4WGUacSEBDPoC2TrBkw3GAnOLHBL45QdfHOXp1kJ4ypBGLxTOB+t7NJLpKoC3gznQ==}
+  '@types/node@25.0.9':
+    resolution: {integrity: sha512-/rpCXHlCWeqClNBwUhDcusJxXYDjZTyE8v5oTO7WbL8eij2nKhUeU89/6xgjU7N4/Vh3He0BtyhJdQbDyhiXAw==}
 
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
@@ -1240,8 +1240,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  undici-types@7.11.0:
-    resolution: {integrity: sha512-kt1ZriHTi7MU+Z/r9DOdAI3ONdaR3M3csEaRc6ewa4f4dTvX4cQCbJ4NkEn0ohE4hHtq85+PhPSTY+pO/1PwgA==}
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
   undici@7.14.0:
     resolution: {integrity: sha512-Vqs8HTzjpQXZeXdpsfChQTlafcMQaaIwnGwLam1wudSSjlJeQ3bw1j+TLPePgrCnCpUXx7Ba5Pdpf5OBih62NQ==}
@@ -1408,7 +1408,7 @@ snapshots:
     optionalDependencies:
       workerd: 1.20251210.0
 
-  '@cloudflare/vite-plugin@1.17.1(vite@7.3.0(@types/node@24.4.0)(yaml@2.8.1))(workerd@1.20251210.0)(wrangler@4.54.0)':
+  '@cloudflare/vite-plugin@1.17.1(vite@7.3.0(@types/node@25.0.9)(yaml@2.8.1))(workerd@1.20251210.0)(wrangler@4.54.0)':
     dependencies:
       '@cloudflare/unenv-preset': 2.7.13(unenv@2.0.0-rc.24)(workerd@1.20251210.0)
       '@remix-run/node-fetch-server': 0.8.1
@@ -1418,7 +1418,7 @@ snapshots:
       picocolors: 1.1.1
       tinyglobby: 0.2.15
       unenv: 2.0.0-rc.24
-      vite: 7.3.0(@types/node@24.4.0)(yaml@2.8.1)
+      vite: 7.3.0(@types/node@25.0.9)(yaml@2.8.1)
       wrangler: 4.54.0
       ws: 8.18.0
     transitivePeerDependencies:
@@ -1811,9 +1811,9 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@24.4.0':
+  '@types/node@25.0.9':
     dependencies:
-      undici-types: 7.11.0
+      undici-types: 7.16.0
     optional: true
 
   accepts@2.0.0:
@@ -2382,7 +2382,7 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  undici-types@7.11.0:
+  undici-types@7.16.0:
     optional: true
 
   undici@7.14.0: {}
@@ -2399,7 +2399,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite@7.3.0(@types/node@24.4.0)(yaml@2.8.1):
+  vite@7.3.0(@types/node@25.0.9)(yaml@2.8.1):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -2408,7 +2408,7 @@ snapshots:
       rollup: 4.54.0
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.4.0
+      '@types/node': 25.0.9
       fsevents: 2.3.3
       yaml: 2.8.1
 

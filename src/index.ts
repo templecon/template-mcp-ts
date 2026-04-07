@@ -1,18 +1,20 @@
 import { StreamableHTTPTransport } from "@hono/mcp";
 import { Hono } from "hono";
-import mcp from "./mcp";
+import { createMcp } from "./mcp";
+import type { Bindings } from "./types";
 
-let app = new Hono();
+const app = new Hono<{ Bindings: Bindings }>();
 
-app = app.all("/mcp", async (c) => {
+app.all("/mcp", async (c) => {
+    const mcp = createMcp(c.env);
     const transport = new StreamableHTTPTransport({
         sessionIdGenerator: undefined,
     });
-    transport.handleRequest;
+    // transport.handleRequest is a handler, but here we use it to delegate
     await mcp.connect(transport);
     return transport.handleRequest(c);
 });
 
-app = app.get("/", (c) => c.text("Hello World"));
+app.get("/", (c) => c.text("Korea Drug Info MCP Server"));
 
 export default app;
