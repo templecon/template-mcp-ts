@@ -167,11 +167,11 @@ export function transformPermissionDrugToSummary(
 ): DrugSummary {
     return {
         source: "PermissionInfo",
-        id: item.item_seq || item.prdlst_Stdr_code || "",
-        name: item.item_name || "Unknown",
-        manufacturer: item.entp_name || "Unknown",
-        ingredients: item.item_ingr_name,
-        classification: item.spclty_pblc,
+        id: item.ITEM_SEQ || item.PRDLST_STDR_CODE || "",
+        name: item.ITEM_NAME || "Unknown",
+        manufacturer: item.ENTP_NAME || "Unknown",
+        ingredients: item.ITEM_INGR_NAME || undefined,
+        classification: item.SPCLTY_PBLC || undefined,
     };
 }
 
@@ -198,14 +198,14 @@ export function transformPermissionToDetail(
 ): DrugDetail {
     return {
         source: "PermissionInfo",
-        id: item.item_seq || "",
-        name: item.item_name || "",
-        manufacturer: item.entp_name || "",
-        ingredients: item.main_item_ingr,
-        permitDate: item.item_permit_date,
-        efficacy: item.ee_doc_data ? "See Doc Data" : undefined, // Often these are XML blobs, we might need parsing if we want full text
-        usage: item.ud_doc_data ? "See Doc Data" : undefined,
-        precautions: item.nb_doc_data ? "See Doc Data" : undefined,
+        id: item.ITEM_SEQ || "",
+        name: item.ITEM_NAME || "",
+        manufacturer: item.ENTP_NAME || "",
+        ingredients: item.MAIN_ITEM_INGR || undefined,
+        permitDate: item.ITEM_PERMIT_DATE || undefined,
+        efficacy: item.EE_DOC_DATA ? "See Doc Data" : undefined, // Often these are XML blobs, we might need parsing if we want full text
+        usage: item.UD_DOC_DATA ? "See Doc Data" : undefined,
+        precautions: item.NB_DOC_DATA ? "See Doc Data" : undefined,
         // Permission Detail often doesn't have simple text for efficacy/usage in the JSON.
         // It returns 'Doc Data' which is HTML/XML.
         // For now, we pass it or placeholder.

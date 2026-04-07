@@ -19,7 +19,7 @@ export const EasyDrugItemSchema = z.object({
     depositMethodQesitm: z.string().optional(), // Storage
     openDe: z.string().optional(),
     updateDe: z.string().optional(),
-    itemImage: z.string().optional(),
+    itemImage: z.string().nullable().optional(),
 });
 
 export const EasyDrugResponseSchema = z.object({
@@ -40,15 +40,15 @@ export const EasyDrugResponseSchema = z.object({
 // --- Permission Info (07 - List) API Types ---
 
 export const PermissionDrugListItemSchema = z.object({
-    entp_name: z.string().optional(),
-    item_name: z.string().optional(),
-    item_seq: z.string().optional(),
-    prdlst_Stdr_code: z.string().optional(), // Might be used as ID
-    item_ingr_name: z.string().optional(), // Principal Ingredient
-    prduct_prmisn_no: z.string().optional(),
-    entp_no: z.string().optional(),
-    spclty_pblc: z.string().optional(), // Professional/General
-    bizrno: z.string().optional(),
+    ENTP_NAME: z.string().nullable().optional(),
+    ITEM_NAME: z.string().nullable().optional(),
+    ITEM_SEQ: z.string().nullable().optional(),
+    PRDLST_STDR_CODE: z.string().nullable().optional(), // Might be used as ID
+    ITEM_INGR_NAME: z.string().nullable().optional(), // Principal Ingredient
+    PRDUCT_PRMISN_NO: z.string().nullable().optional(),
+    ENTP_NO: z.string().nullable().optional(),
+    SPCLTY_PBLC: z.string().nullable().optional(), // Professional/General
+    BIZRNO: z.string().nullable().optional(),
 });
 
 export const PermissionDrugListResponseSchema = z.object({
@@ -69,23 +69,23 @@ export const PermissionDrugListResponseSchema = z.object({
 // --- Permission Info (06 - Detail) API Types ---
 
 export const PermissionDrugDetailItemSchema = z.object({
-    item_name: z.string().optional(),
-    entp_name: z.string().optional(),
-    item_permit_date: z.string().optional(),
-    entp_no: z.string().optional(),
-    bar_code: z.string().optional(),
-    item_seq: z.string().optional(),
-    start_change_date: z.string().optional(),
-    end_change_date: z.string().optional(),
-    edi_code: z.string().optional(),
-    atc_code: z.string().optional(),
-    bizrno: z.string().optional(),
-    rare_drug_yn: z.string().optional(),
-    main_item_ingr: z.string().optional(), // Active Ingredient
-    valid_term: z.string().optional(), // Validity Term (guessed common field, might not be in user table but often present)
-    ee_doc_data: z.string().optional(), // XML/Doc data for efficacy? (Common in these APIs)
-    ud_doc_data: z.string().optional(), // Usage doc
-    nb_doc_data: z.string().optional(), // Caution doc
+    ITEM_NAME: z.string().nullable().optional(),
+    ENTP_NAME: z.string().nullable().optional(),
+    ITEM_PERMIT_DATE: z.string().nullable().optional(),
+    ENTP_NO: z.string().nullable().optional(),
+    BAR_CODE: z.string().nullable().optional(),
+    ITEM_SEQ: z.string().nullable().optional(),
+    START_CHANGE_DATE: z.string().nullable().optional(),
+    END_CHANGE_DATE: z.string().nullable().optional(),
+    EDI_CODE: z.string().nullable().optional(),
+    ATC_CODE: z.string().nullable().optional(),
+    BIZRNO: z.string().nullable().optional(),
+    RARE_DRUG_YN: z.string().nullable().optional(),
+    MAIN_ITEM_INGR: z.string().nullable().optional(), // Active Ingredient
+    VALID_TERM: z.string().nullable().optional(), // Validity Term (guessed common field, might not be in user table but often present)
+    EE_DOC_DATA: z.string().nullable().optional(), // XML/Doc data for efficacy? (Common in these APIs)
+    UD_DOC_DATA: z.string().nullable().optional(), // Usage doc
+    NB_DOC_DATA: z.string().nullable().optional(), // Caution doc
 });
 
 export const PermissionDrugDetailResponseSchema = z.object({
