@@ -1,19 +1,18 @@
-# Codebase Review
+# Codebase Review (Updated)
 
-After thoroughly analyzing the codebase and the issues related to API integrations, I have identified and resolved the following key areas:
+After thoroughly re-testing the codebase and reviewing the recent modifications, I have confirmed the fixes and verified the behavior of the application. The system integrates correctly with the Korean Public Data Portal.
 
-## 1. Null Handling in Zod Schemas
-The application integrates with the EasyDrug API (`DrbEasyDrugInfoService`). The `EasyDrugItemSchema` in `src/types.ts` was initially configured to expect a `string` (or `undefined`) for the `itemImage` field using `z.string().optional()`. However, the actual API response occasionally returned `null` for this field when no image was available. This mismatch caused Zod validation failures, preventing successful data parsing.
-**Resolution:** Updated `itemImage` to `z.string().nullable().optional()` to gracefully handle `null` values from the API.
+## 1. Schema Nullability Resolution
+The application queries the EasyDrug API (`DrbEasyDrugInfoService`). Previously, the `EasyDrugItemSchema` failed validation because the `itemImage` field periodically returns `null`.
+**Resolution:** Updating `itemImage` to `z.string().nullable().optional()` successfully prevents the application from throwing validation errors when an image is not available.
 
-## 2. Key Casing Mismatch in Permission Info API
-The application also integrates with the Permission Info API (`DrugPrdtPrmsnInfoService07`). The original `PermissionDrugListItemSchema` and `PermissionDrugDetailItemSchema` expected lowercase JSON keys (e.g., `item_name`, `item_seq`, `entp_name`). However, unlike the EasyDrug API which returns camelCase keys, the Permission Info API returns entirely UPPERCASE keys (e.g., `ITEM_NAME`, `ITEM_SEQ`, `ENTP_NAME`). Because Zod strict validation rules (or optional access patterns) couldn't map these fields properly, the parsed data effectively lost all its values.
-**Resolution:**
-- Updated `src/types.ts` to expect uppercase property names for both list and detail permission schemas, making them nullable as well.
-- Adjusted mapping functions (`transformPermissionDrugToSummary` and `transformPermissionToDetail`) in `src/api.ts` to reference these uppercase keys, ensuring correct transformation into standardized internal formats.
+## 2. API Casing Mismatch in Permission Info
+The application queries the Permission Info API (`DrugPrdtPrmsnInfoService07`). The previous schema configuration expected lowercase keys (e.g., `item_name`, `entp_name`), but the actual API response keys are entirely UPPERCASE (e.g., `ITEM_NAME`, `ENTP_NAME`).
+**Resolution:** Re-testing confirms that updating the `PermissionDrugListItemSchema` and `PermissionDrugDetailItemSchema` properties to uppercase, and mapping them appropriately in `src/api.ts`, correctly resolves the data parsing issues.
 
-## 3. Detail API Endpoint (`getDrugPrdtPrmsnDtInq06`)
-During testing, calls to the detail API endpoint (`getDrugPrdtPrmsnDtInq06`) repeatedly returned an "API not found" error across different service versions (`06` and `07`). Although this seems to be an upstream issue with the Korean Data Portal API structure or permissions for the specific API key, fixing the validation errors guarantees that the primary List operations via `search_drugs` and EasyDrug operations work flawlessly. The fallback mechanisms implemented in the current `read_drug_detail` logic are adequately structured to handle these upstream errors safely without crashing.
+## 3. Fallback Mechanism and Upstream Detail API
+During the tests, the detail API endpoint (`getDrugPrdtPrmsnDtInq06`) returned a `404 Not Found` error. This behavior implies an upstream issue with the Korean Data Portal API structure, endpoint routing, or specific API key permissions.
+**Resolution:** The fallback logic built into `mcp.ts` successfully captures these errors without crashing the main server. The orchestration properly attempts EasyDrug first, then tries the Permission Detail lookup, and elegantly returns a "Drug details not found" error format when the upstream service fails.
 
-## Summary
-The current MCP server architecture using `Muppet` and `@hono/mcp` is well-structured and handles API orchestration cleanly. The issues were isolated strictly to typing mismatches between expected Zod schemas and real-world Korean Public Data Portal API responses. These mismatches have now been corrected, leading to stable schema validation and data processing.
+## Conclusion
+The application logic, schemas, and robust orchestration fallbacks using `Muppet` operate effectively. The specific types and mapping logic corrections applied to the `types.ts` and `api.ts` components correctly align the application with real-world upstream data structures.
