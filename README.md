@@ -45,6 +45,8 @@ pnpm build
 pnpm test
 ```
 
+If you are using this repository as a template for a new project, refer to the "Using This Template In A New Project" section in [AGENTS.md](./AGENTS.md) for the required replacement checklist.
+
 ## MCP Endpoint
 
 The MCP server is available at `/mcp`. Use an MCP client (like Claude Desktop or Claude Code) to connect and use the tools and prompts.

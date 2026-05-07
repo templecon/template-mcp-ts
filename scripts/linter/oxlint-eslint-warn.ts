@@ -1,9 +1,8 @@
-// Contains rules that are: too strict to be errors,
-// but are still worth warning about, for machine-generated ./oxlint-eslint-error.json
+import { defineConfig } from "oxlint";
 
-{
-    "$schema": "../../node_modules/oxlint/configuration_schema.json",
-    "rules": {
+// Warning-only rules that are still worth keeping in the generated baseline.
+export default defineConfig({
+    rules: {
         // Working, but unrecommended patterns.
         "@typescript-eslint/ban-ts-comment": "warn",
         "@typescript-eslint/no-duplicate-type-constituents": "warn",
@@ -51,8 +50,7 @@
 
         // Best practice.
         "@typescript-eslint/no-shadow": "warn",
-        "no-console": "warn",
-        "eqeqeq": "warn",
+        eqeqeq: "warn",
         "no-multi-assign": "warn",
         "no-else-return": "warn",
         "no-lonely-if": "warn",
@@ -67,6 +65,7 @@
         "no-useless-concat": "warn",
         "no-useless-rename": "warn",
         "prefer-template": "warn",
-        "object-shorthand": "warn"
-    }
-}
+        "object-shorthand": "warn",
+    },
+    categories: {},
+});

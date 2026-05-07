@@ -26,8 +26,10 @@ const testConfig: Config["test"] = {
     globals: true,
     include: ["tests/**/*.test.ts"],
     setupFiles: "./tests/setup.ts",
+    silent: "passed-only",
 };
 const isVitest = typeof process.env.VITEST !== "undefined";
+
 export default defineConfig(() => {
     const cloudflarePlugin = isVitest
         ? cloudflareTest({
