@@ -61,7 +61,7 @@
         "simple-git-hooks": "^2.13.1",
         "typescript": "~6.0.2",
         "typescript-eslint": "^8.57.2",
-        "vite": "^8.0.3",
+        "vite": "^8.0.5",
         "vitest": "^4.1.2",
         "wrangler": "^4.78.0"
     },
