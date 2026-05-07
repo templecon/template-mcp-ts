@@ -13,5 +13,6 @@
         "./.simple-git-hooks.mjs",
         "scripts/**/*.ts"
     ],
+    "exclude": ["worker-configuration.d.ts"],
     "extends": "./tsconfig.base.json"
 }

@@ -31,7 +31,8 @@
         "pre-commit": "pnpm run check",
         "test": "vitest run",
         "deploy": "pnpm run build && wrangler deploy",
-        "inspect": "node scripts/inspect.ts"
+        "inspect": "node scripts/inspect.ts",
+        "e2e:inspector": "node scripts/e2e-inspector.ts"
     },
     "engines": {
         "node": ">=22.18.0 <23.0.0 || >=23.6.0"
