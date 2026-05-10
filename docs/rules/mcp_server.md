@@ -32,7 +32,7 @@ If a hint is not clearly true, leave it out.
 ## Schemas
 
 - Use Zod for validation.
-- Use `z.input<typeof schema>` for handler parameters.
+- Use `z.output<typeof schema>` for handler parameters.
 - Use `z.output<typeof schema>` for the normalized or structured result type.
 - Prefer `satisfies` in handlers when returning structured content.
 - Put JSDoc on schema fields when the field needs explanation.

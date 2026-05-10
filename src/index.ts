@@ -1,10 +1,8 @@
+import type { HonoEnv } from "@/types";
 import { setup } from "@/route";
 import { cors } from "@/utils/cors";
 import { StreamableHTTPTransport } from "@hono/mcp";
 import { Hono } from "hono";
-export type Env = {
-    MAGIC_SECRET_KEY: string;
-};
 /**
  * @fileoverview
  * This is the main entry point of the Hono application. It sets up the routing and middleware for the application.
@@ -12,7 +10,7 @@ export type Env = {
  */
 
 const transport = new StreamableHTTPTransport();
-const app = new Hono<{ Bindings: Env }>()
+const app = new Hono<HonoEnv>()
     .use("*", cors)
     .all("/mcp", async (c) => {
         const mcpServer = setup(c.env);

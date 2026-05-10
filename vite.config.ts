@@ -6,6 +6,22 @@ import { fileURLToPath } from "node:url";
 
 type Config = Required<UserConfig>;
 
+/**
+ * Directories to ignore for any file-watching features.
+ */
+const ignoredDir = [
+    "node_modules",
+    "dist",
+    "coverage",
+    ".wrangler",
+    ".git",
+    "dist-ts",
+].map((dir) => `**/${dir}/**`);
+
+/**
+ * Import aliases.
+ * Should be exactly matched in tsconfig.base.json's "paths" field for type safety.
+ */
 const resolve: Config["resolve"] = {
     alias: {
         "@": fileURLToPath(new URL("src", import.meta.url)),
@@ -22,13 +38,34 @@ const testConfig: Config["test"] = {
         reporter: ["text", "json-summary", "html"],
     },
     environment: "node",
-    exclude: ["**/node_modules/**", "**/dist/**"],
+    exclude: ignoredDir,
     globals: true,
     include: ["tests/**/*.test.ts"],
+    includeSource: ["src/**/*.ts"],
     setupFiles: "./tests/setup.ts",
     silent: "passed-only",
+    env: {
+        VITEST: "true",
+    },
 };
 const isVitest = typeof process.env.VITEST !== "undefined";
+
+const buildConfig: Config["build"] = {
+    lib: {
+        entry: fileURLToPath(new URL("src/index.ts", import.meta.url)),
+        formats: ["es"],
+        fileName: "index",
+    },
+    outDir: "dist",
+    sourcemap: true,
+    rolldownOptions: {
+        // Disable code splitting
+        output: {
+            inlineDynamicImports: true,
+            codeSplitting: false,
+        },
+    },
+};
 
 export default defineConfig(() => {
     const cloudflarePlugin = isVitest
@@ -38,15 +75,12 @@ export default defineConfig(() => {
         : cloudflare();
     return {
         plugins: [cloudflarePlugin],
-        build: {
-            lib: {
-                entry: fileURLToPath(new URL("src/index.ts", import.meta.url)),
-                formats: ["es"],
-                fileName: "index",
+        server: {
+            watch: {
+                ignored: ignoredDir,
             },
-            outDir: "dist",
-            sourcemap: true,
         },
+        build: buildConfig,
         clearScreen: false,
         resolve,
         test: testConfig,

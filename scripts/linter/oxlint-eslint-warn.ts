@@ -1,9 +1,7 @@
 import { defineConfig } from "oxlint";
 
-// Warning-only rules that are still worth keeping in the generated baseline.
 export default defineConfig({
     rules: {
-        // Working, but unrecommended patterns.
         "@typescript-eslint/ban-ts-comment": "warn",
         "@typescript-eslint/no-duplicate-type-constituents": "warn",
         "@typescript-eslint/no-empty-object-type": "warn",
@@ -48,7 +46,6 @@ export default defineConfig({
         "preserve-caught-error": "warn",
         "require-yield": "warn",
 
-        // Best practice.
         "@typescript-eslint/no-shadow": "warn",
         eqeqeq: "warn",
         "no-multi-assign": "warn",

@@ -9,7 +9,6 @@
         "!./*.d.ts",
         "./*.js",
         "./*.mjs",
-        // dotfiles
         "./.simple-git-hooks.mjs",
         "scripts/**/*.ts"
     ],

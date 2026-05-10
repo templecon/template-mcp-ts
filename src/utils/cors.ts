@@ -1,10 +1,8 @@
-import type { Hono } from "hono";
-type MiddlewareHandler = Parameters<Parameters<Hono["use"]>[1]>;
-export async function cors(
-    c: MiddlewareHandler["0"],
-    next: MiddlewareHandler["1"]
-) {
-    // CORS allow all
+import type { HonoEnv } from "@/types";
+import type { Context as RawContext, Next } from "hono";
+type Context = RawContext<HonoEnv, string>;
+
+export async function cors(c: Context, next: Next) {
     const requestedOrigin = c.req.header("Origin");
     if (requestedOrigin) {
         c.header("Access-Control-Allow-Origin", requestedOrigin);
@@ -20,4 +18,15 @@ export async function cors(
         return c.newResponse(null);
     }
     return next();
+}
+
+if (import.meta.env.VITEST) {
+    const { it, describe, expectTypeOf } = await import("vitest");
+    describe("CORS middleware", () => {
+        it("env should be typed correctly", () => {
+            expectTypeOf<Context>().toExtend<{
+                env: HonoEnv["Bindings"];
+            }>();
+        });
+    });
 }

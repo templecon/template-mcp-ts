@@ -1,7 +1,5 @@
 import { defineConfig } from "oxlint";
 
-// Base rule set, which is similar to ESLint.
-// Extend this in `oxlint.config.ts` and override rules there.
 export default defineConfig({
     rules: {
         "@typescript-eslint/await-thenable": "error",

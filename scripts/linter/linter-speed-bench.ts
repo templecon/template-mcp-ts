@@ -1,20 +1,9 @@
-/**
- * @fileoverview
- * This script benchmarks the execution time of the `pnpm lint` command, which runs ESLint on the project.
- * It measures the time taken for each run, calculates the average and standard deviation, and determines when a statistically stable result is achieved based on the coefficient of variation (CV).
- * Don't have to be run on scripts or CI, but you can run it if you have lots of curiosity.
- */
-
 import { spawnSync } from "child_process";
 import { performance } from "perf_hooks";
 
 const COMMAND_NAME = "pnpm";
 const COMMAND_ARGS = ["lint"];
 
-/**
- * Executes the lint command and measures elapsed time.
- * Includes error handling for process failures and missing binaries.
- */
 function runBenchCommand(): number {
     const start = performance.now();
 
@@ -24,16 +13,12 @@ function runBenchCommand(): number {
             shell: true,
             encoding: "utf-8",
         });
-        const end = performance.now(); // Measure time immediately after process completion
+        const end = performance.now();
 
-        // 1. Check if the process failed to start (e.g., pnpm not found)
         if (res.error) {
             throw new Error(`Failed to start command: ${res.error.message}`);
         }
 
-        // 2. Check for non-zero exit codes
-        // Note: Some linters return non-zero if errors are found.
-        // We catch this to ensure we aren't benchmarking a crashed process.
         if (res.status !== 0) {
             const stderr = res.stderr?.toString().trim() || "No error output";
             throw new Error(
@@ -50,9 +35,6 @@ function runBenchCommand(): number {
     }
 }
 
-/**
- * Calculates mean and standard deviation with safety checks.
- */
 function calculateStats(data: number[]): { mean: number; stdev: number } {
     const n = data.length;
     if (n === 0) return { mean: 0, stdev: 0 };
@@ -67,9 +49,6 @@ function calculateStats(data: number[]): { mean: number; stdev: number } {
     return { mean, stdev };
 }
 
-/**
- * Cleans data using IQR to remove outliers.
- */
 function getCleanedStats(data: number[]): { mean: number; stdev: number } {
     if (data.length < 4) {
         return calculateStats(data);
@@ -89,14 +68,10 @@ function getCleanedStats(data: number[]): { mean: number; stdev: number } {
         (x) => x >= lowerBound && x <= upperBound
     );
 
-    // Fallback if filtering leaves too few points
     const finalTarget = filteredData.length >= 2 ? filteredData : data;
     return calculateStats(finalTarget);
 }
 
-/**
- * Runs the benchmark loop.
- */
 function benchmarkPnpmLint(
     targetCv: number = 0.02,
     minRuns: number = 5,
@@ -170,13 +145,11 @@ function benchmarkPnpmLint(
     console.log(separator);
 }
 
-// Global process handling for interruptions
 process.on("SIGINT", () => {
     console.log("\n\n🛑 Benchmark aborted by user.");
     process.exit(0);
 });
 
-// Entry Point
 try {
     benchmarkPnpmLint();
 } catch (error) {

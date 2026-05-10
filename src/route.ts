@@ -1,23 +1,19 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { Env } from "@/index";
+import type { Env } from "./types";
 import * as z from "zod";
 import nplus1 from "./prompt/nplus1.md?raw";
 
 let appSingleton: McpServer | null = null;
 let previousEnv: Env | null = null;
 
+function getStringEnv(obj: Record<string, unknown>): Record<string, string> {
+    return Object.fromEntries(
+        Object.entries(obj).filter(
+            (entry): entry is [string, string] => typeof entry[1] === "string"
+        )
+    );
+}
 function isCached(env: Env): boolean {
-    function getStringEnv(
-        obj: Record<string, unknown>
-    ): Record<string, string> {
-        return Object.fromEntries(
-            Object.entries(obj).filter(
-                (entry): entry is [string, string] =>
-                    typeof entry[1] === "string"
-            )
-        );
-    }
-
     if (!appSingleton || !previousEnv) {
         return false;
     }
@@ -61,7 +57,7 @@ export function setup(env: Env) {
             title: "Greet",
         },
         async (i) => {
-            i satisfies z.input<typeof inputSchema>;
+            i satisfies z.output<typeof inputSchema>;
             if (env.MAGIC_SECRET_KEY) {
                 console.log(
                     `🔐 MAGIC_SECRET_KEY is set. Received name: ${i.name}`
@@ -124,9 +120,11 @@ export function setup(env: Env) {
                         role: "user",
                     },
                 ],
+                description: "Prompt for N+1 query test generation",
             };
         }
     );
+
     appSingleton = app;
     previousEnv = env;
     return app;
