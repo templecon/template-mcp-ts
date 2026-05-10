@@ -151,7 +151,7 @@ function runInspector(check: InspectorCheck) {
     }
 
     if (result.status !== 0) {
-        console.warn(
+        throw new Error(
             `${check.name} returned valid MCP data but exited with ${result.status}`
         );
     }

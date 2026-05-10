@@ -63,6 +63,8 @@ When this repository is copied or renamed for a real project, update the templat
 - `src/route.ts`
     - Replace the MCP server display name currently set to `Example MCP Server`.
     - Update any user-facing tool, prompt, or description text that still says `Example`.
+- `src/utils/cors.ts`
+    - Review CORS settings to ensure they fit the new project's needs. The template allows as much as possible.
 - `scripts/inspect.ts`
     - Replace the `remote` placeholder endpoint with the real MCP endpoint for the new project.
     - Update the default tool name and args if the template's example tool changes.

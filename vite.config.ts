@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 
 type Config = Required<UserConfig>;
 
+const isVitest = typeof process.env.VITEST !== "undefined";
+
 /**
  * Directories to ignore for any file-watching features.
  */
@@ -41,14 +43,13 @@ const testConfig: Config["test"] = {
     exclude: ignoredDir,
     globals: true,
     include: ["tests/**/*.test.ts"],
-    includeSource: ["src/**/*.ts"],
+
     setupFiles: "./tests/setup.ts",
     silent: "passed-only",
     env: {
         VITEST: "true",
     },
 };
-const isVitest = typeof process.env.VITEST !== "undefined";
 
 const buildConfig: Config["build"] = {
     lib: {

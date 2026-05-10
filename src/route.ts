@@ -88,7 +88,7 @@ export function setup(env: Env) {
             title: "Ungreet",
         },
         async (i) => {
-            i satisfies z.input<typeof inputSchema>;
+            i satisfies z.output<typeof inputSchema>;
             return {
                 content: [
                     {
