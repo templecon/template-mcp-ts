@@ -1,7 +1,8 @@
-import { app as mcpServer } from "@/route";
+import type { HonoEnv } from "@/types";
+import { setup } from "@/route";
+import { cors } from "@/utils/cors";
 import { StreamableHTTPTransport } from "@hono/mcp";
 import { Hono } from "hono";
-
 /**
  * @fileoverview
  * This is the main entry point of the Hono application. It sets up the routing and middleware for the application.
@@ -9,29 +10,10 @@ import { Hono } from "hono";
  */
 
 const transport = new StreamableHTTPTransport();
-const app = new Hono()
-    .use("*", async (c, next) => {
-        // CORS allow all
-        const requestedOrigin = c.req.header("Origin");
-        if (requestedOrigin) {
-            c.header("Access-Control-Allow-Origin", requestedOrigin);
-        }
-        c.header(
-            "Access-Control-Allow-Methods",
-            "GET, POST, PUT, DELETE, PATCH"
-        );
-        const requestedHeaders = c.req.header("Access-Control-Request-Headers");
-        if (requestedHeaders) {
-            c.header("Access-Control-Allow-Headers", requestedHeaders);
-            c.header("Access-Control-Expose-Headers", requestedHeaders);
-        }
-        if (c.req.method === "OPTIONS") {
-            c.status(204);
-            return c.newResponse(null);
-        }
-        return next();
-    })
+const app = new Hono<HonoEnv>()
+    .use("*", cors)
     .all("/mcp", async (c) => {
+        const mcpServer = setup(c.env);
         if (!mcpServer.isConnected()) {
             // Connect the mcp with the transport
             await mcpServer.connect(transport);

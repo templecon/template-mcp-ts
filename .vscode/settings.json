@@ -6,5 +6,6 @@
     "js/ts.preferences.preferTypeOnlyAutoImports": true,
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "files.eol": "\n"
 }
