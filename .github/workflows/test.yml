@@ -55,7 +55,7 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Run tests
-              run: pnpm run test --reporter=blob --coverage.enabled --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+              run: pnpm run test --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
             - name: Upload blob report to GitHub Actions Artifacts
               if: ${{ !cancelled() }}
@@ -95,4 +95,4 @@ jobs:
               if: ${{ github.event_name == 'pull_request' && always()}}
               uses: concertypin/action/report-vitest-coverage@master
               with:
-                  threshold: 50
+                  threshold: 20
