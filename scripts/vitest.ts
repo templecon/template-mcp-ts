@@ -52,9 +52,23 @@ process.on("SIGINT", (): void => {
 child.stdout.on("data", makeFilter(process.stdout));
 child.stderr.on("data", makeFilter(process.stderr));
 
-child.on("close", (code: number | null): void => {
-    process.exit(code ?? 0);
-});
+child.on(
+    "close",
+    (code: number | null, signal: NodeJS.Signals | null): void => {
+        if (code !== null) {
+            process.exit(code);
+        }
+
+        if (signal === "SIGINT") {
+            process.exit(130);
+        }
+        if (signal === "SIGTERM") {
+            process.exit(143);
+        }
+
+        process.exit(1);
+    }
+);
 
 child.on("error", (err: Error): void => {
     console.error("Failed to spawn vitest:", err);
