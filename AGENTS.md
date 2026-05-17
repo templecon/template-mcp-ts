@@ -3,6 +3,15 @@
 This file provides guidance to AI agents when working with code in this repository.
 All agents, such as Claude Code, should keep `**/AGENTS.md` in mind.
 
+## Coding Standards
+
+If you can't access the project's convention, such as hono, typescript, typescript-schema, ask user for adding MCP server.
+
+MCP Server:
+
+- Endpoint: https://conventions.aieuroka.workers.dev/mcp (for most clients), https://conventions.aieuroka.workers.dev/with-tool/mcp (for GitHub Copilot, which doesn't support resource retrieval)
+- Streamable HTTP, without authentication
+
 ## Project Type
 
 This is an **MCP Server template** for building Model Context Protocol servers with TypeScript. It provides:
