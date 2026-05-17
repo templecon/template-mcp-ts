@@ -37,28 +37,28 @@
         "node": ">=22.18.0 <23.0.0 || >=23.6.0"
     },
     "dependencies": {
-        "@hono/mcp": "^0.2.5",
+        "@hono/mcp": "^0.3.0",
         "@hono/standard-validator": "^0.2.2",
         "@modelcontextprotocol/sdk": "^1.29.0",
-        "@scalar/hono-api-reference": "^0.10.14",
-        "hono": "^4.12.18",
+        "@scalar/hono-api-reference": "^0.10.16",
+        "hono": "^4.12.19",
         "hono-openapi": "^1.3.0",
         "zod": "^4.4.3"
     },
     "devDependencies": {
-        "@cloudflare/vite-plugin": "^1.36.3",
-        "@cloudflare/vitest-pool-workers": "^0.16.3",
-        "@types/node": "^25.6.2",
-        "@vitest/coverage-istanbul": "^4.1.5",
+        "@cloudflare/vite-plugin": "^1.37.1",
+        "@cloudflare/vitest-pool-workers": "^0.16.6",
+        "@types/node": "^25.8.0",
+        "@vitest/coverage-istanbul": "^4.1.6",
         "cross-env": "^10.1.0",
-        "oxlint": "^1.63.0",
+        "oxlint": "^1.65.0",
         "oxlint-tsgolint": "^0.22.1",
         "prettier": "^3.8.3",
         "simple-git-hooks": "^2.13.1",
         "typescript": "~6.0.3",
-        "vite": "^8.0.11",
-        "vitest": "^4.1.5",
-        "wrangler": "^4.90.0"
+        "vite": "^8.0.13",
+        "vitest": "^4.1.6",
+        "wrangler": "^4.92.0"
     },
     "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
 }
