@@ -14,7 +14,12 @@ const SUPPRESS_PATTERN =
     /^(Sourcemap for ".+" points to missing source files| {2}vite:sourcemap .+)\s*$/;
 
 const args: string[] = process.argv.slice(2);
-const child = spawn("pnpm", ["vitest", ...args], {
+const command = process.platform === "win32" ? "cmd.exe" : "pnpm";
+const commandArgs =
+    process.platform === "win32"
+        ? ["/d", "/s", "/c", "pnpm", "vitest", ...args]
+        : ["vitest", ...args];
+const child = spawn(command, commandArgs, {
     env: {
         ...process.env,
         FORCE_COLOR: "3",

@@ -34,7 +34,7 @@
         "e2e:inspector": "node scripts/e2e-inspector.ts"
     },
     "engines": {
-        "node": ">=22.18.0 <23.0.0 || >=23.6.0"
+        "node": ">=24"
     },
     "dependencies": {
         "@hono/mcp": "^0.3.0",
