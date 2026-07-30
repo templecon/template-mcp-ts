@@ -1,5 +1,5 @@
 import { defineConfig } from "oxlint";
-import eslintRules from "./scripts/linter/oxlint-eslint.ts";
+import config from "@concertypin/config/oxlint";
 
 export default defineConfig({
     plugins: ["typescript", "unicorn", "import", "vitest", "promise", "eslint"],
@@ -23,7 +23,7 @@ export default defineConfig({
             },
         },
     ],
-    extends: [eslintRules],
+    extends: [config],
     rules: {
         "@typescript-eslint/require-await": "off",
     },

@@ -61,6 +61,14 @@ Configuration is in `wrangler.jsonc`.
 
 When this repository is copied or renamed for a real project, update the template-specific identifiers before shipping:
 
+Immediately after creating a project from this template, upgrade all dependencies and refresh the lockfile:
+
+```bash
+pnpm up --latest
+```
+
+Run the project's format, lint, test, and build checks after the upgrade and resolve every resulting error before continuing development.
+
 - `package.json`
     - Change `name` to the new package name.
     - Update `repository.url` if the project lives in a different repo.

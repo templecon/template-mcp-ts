@@ -14,7 +14,6 @@ const SUPPRESS_PATTERN =
     /^(Sourcemap for ".+" points to missing source files| {2}vite:sourcemap .+)\s*$/;
 
 const args: string[] = process.argv.slice(2);
-
 const child = spawn("pnpm", ["vitest", ...args], {
     env: {
         ...process.env,
