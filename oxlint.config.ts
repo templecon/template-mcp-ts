@@ -15,14 +15,6 @@ export default defineConfig({
         "**/.vscode/**",
         "**/.git/**",
     ],
-    overrides: [
-        {
-            files: ["**/*.d.ts"],
-            rules: {
-                "no-unused-vars": "off",
-            },
-        },
-    ],
     extends: [config],
     rules: {
         "@typescript-eslint/require-await": "off",

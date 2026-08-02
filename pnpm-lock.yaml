@@ -37,8 +37,8 @@ importers:
         specifier: ^0.16.6
         version: 0.16.6(@vitest/runner@4.1.6)(@vitest/snapshot@4.1.6)(vitest@4.1.6)
       '@concertypin/config':
-        specifier: ^0.1.0
-        version: 0.1.0(oxlint@1.65.0(oxlint-tsgolint@0.22.1))
+        specifier: ^0.1.2
+        version: 0.1.2(oxlint@1.65.0(oxlint-tsgolint@0.22.1))
       '@types/node':
         specifier: ^25.8.0
         version: 25.8.0
@@ -198,9 +198,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@concertypin/config@0.1.0':
-    resolution: {integrity: sha512-xZjY0+skOVRrTDzjKLblqnhUor2C6qm5Ovew6ElzgzxuFjqDWRvoXVsLOMSCLHxBA9ECe8ExO0uBZKtz6DbvTQ==}
-    engines: {node: '>=20.19.0'}
+  '@concertypin/config@0.1.2':
+    resolution: {integrity: sha512-gNFRio/XcnbuBay96knzkmozbZF7T3VauNiYgMYTs1X+CwAgp4Huq8Jufmv5DdRTgJ9AgcZxvr+SxQttwILw7Q==}
+    engines: {node: '>=24'}
     peerDependencies:
       oxlint: '>=1.47.0 <2'
 
@@ -1986,7 +1986,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260515.1':
     optional: true
 
-  '@concertypin/config@0.1.0(oxlint@1.65.0(oxlint-tsgolint@0.22.1))':
+  '@concertypin/config@0.1.2(oxlint@1.65.0(oxlint-tsgolint@0.22.1))':
     dependencies:
       oxlint: 1.65.0(oxlint-tsgolint@0.22.1)
 

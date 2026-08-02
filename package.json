@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "author": {
         "name": "concertypin",
         "url": "https://github.com/concertypin"
@@ -47,7 +47,7 @@
     "devDependencies": {
         "@cloudflare/vite-plugin": "^1.37.1",
         "@cloudflare/vitest-pool-workers": "^0.16.6",
-        "@concertypin/config": "^0.1.0",
+        "@concertypin/config": "^0.1.2",
         "@types/node": "^25.8.0",
         "@vitest/coverage-istanbul": "^4.1.6",
         "cross-env": "^10.1.0",
