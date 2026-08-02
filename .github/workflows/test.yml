@@ -20,14 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Install Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: package.json
-          cache: pnpm
+      - name: Set up pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -57,14 +51,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Install Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: package.json
-          cache: pnpm
+      - name: Set up pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
