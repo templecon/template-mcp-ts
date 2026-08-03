@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "author": {
         "name": "concertypin",
         "url": "https://github.com/concertypin"
@@ -23,18 +23,18 @@
         "build": "vite build",
         "cf-typegen": "wrangler types --env-interface CloudflareBindings",
         "format": "prettier --write . --cache --cache-location node_modules/.cache/prettier --list-different",
+        "format:check": "prettier --check . --cache --cache-location node_modules/.cache/prettier",
         "lint": "pnpm run lint:check --fix",
         "lint:check": "oxlint .",
         "postinstall": "pnpm run cf-typegen && simple-git-hooks",
-        "check": "pnpm run format && pnpm run lint && pnpm run test && git add -u",
-        "pre-commit": "pnpm run check",
+        "check": "pnpm run format:check && pnpm run lint:check && pnpm run test",
         "test": "node scripts/vitest.ts run",
         "deploy": "pnpm run build && wrangler deploy",
         "inspect": "node scripts/inspect.ts",
         "e2e:inspector": "node scripts/e2e-inspector.ts"
     },
     "engines": {
-        "node": ">=22.18.0 <23.0.0 || >=23.6.0"
+        "node": ">=26"
     },
     "dependencies": {
         "@hono/mcp": "^0.3.0",
@@ -48,6 +48,7 @@
     "devDependencies": {
         "@cloudflare/vite-plugin": "^1.37.1",
         "@cloudflare/vitest-pool-workers": "^0.16.6",
+        "@concertypin/config": "^0.1.2",
         "@types/node": "^25.8.0",
         "@vitest/coverage-istanbul": "^4.1.6",
         "cross-env": "^10.1.0",
