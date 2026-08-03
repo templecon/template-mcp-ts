@@ -23,6 +23,10 @@ This template includes example MCP implementations:
 
 - `nplus1` - Generates tests for N+1 query issues in Java Spring applications
 
+## Requirements
+
+- Node.js 26 or later
+
 ## Getting Started
 
 ```sh
@@ -53,4 +57,4 @@ The MCP server is available at `/mcp`. Use an MCP client (like Claude Desktop or
 
 ## License
 
-Apache-2.0, see [LICENSE](./LICENSE) for details.
+MIT, see [LICENSE](./LICENSE) for details.
