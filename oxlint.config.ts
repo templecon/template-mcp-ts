@@ -18,6 +18,9 @@ export default defineConfig({
     extends: [config],
     rules: {
         "@typescript-eslint/require-await": "off",
+
+        // Server code
+        "no-console": "off",
     },
     options: {
         typeAware: true,
