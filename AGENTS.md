@@ -75,7 +75,7 @@ Run the project's format, lint, test, and build checks after the upgrade and res
     - Adjust `author` and any other publishing metadata if needed.
 - `wrangler.jsonc`
     - Change the top-level `name`.
-    - Set `env.prod.name` to the production Worker name if you use that environment.
+    - Add an environment override with its own Worker `name` if the project needs separate deployment environments.
     - Review `compatibility_date` if the template should target a different deploy date.
 - `src/route.ts`
     - Replace the MCP server display name currently set to `Example MCP Server`.
