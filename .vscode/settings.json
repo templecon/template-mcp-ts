@@ -8,7 +8,7 @@
         "editor.tabSize": 2
     },
     "js/ts.preferences.preferTypeOnlyAutoImports": true,
-    "[json]": {
+    "[json][jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "files.eol": "\n"
