@@ -1,8 +1,9 @@
-import type { HonoEnv } from "@/types";
-import { setup } from "@/route";
-import { cors } from "@/utils/cors";
 import { StreamableHTTPTransport } from "@hono/mcp";
 import { Hono } from "hono";
+
+import { setup } from "@/route";
+import type { HonoEnv } from "@/types";
+import { cors } from "@/utils/cors";
 /**
  * @fileoverview
  * This is the main entry point of the Hono application. It sets up the routing and middleware for the application.

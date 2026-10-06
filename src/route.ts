@@ -1,7 +1,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { Env } from "./types";
 import * as z from "zod";
+
 import nplus1 from "./prompt/nplus1.md?raw";
+import type { Env } from "./types";
 
 let appSingleton: McpServer | null = null;
 let previousEnv: Env | null = null;

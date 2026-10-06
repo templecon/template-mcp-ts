@@ -1,7 +1,7 @@
-import { describe, expect, it } from "vitest";
-import { testClient } from "hono/testing";
-
 import { Hono } from "hono";
+import { testClient } from "hono/testing";
+import { describe, expect, it } from "vitest";
+
 import type { HonoEnv } from "@/types";
 import { cors } from "@/utils/cors";
 
