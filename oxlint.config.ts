@@ -1,5 +1,5 @@
+import baseConfig from "@concertypin/config/oxlint";
 import { defineConfig } from "oxlint";
-import config from "@concertypin/config/oxlint";
 
 export default defineConfig({
     plugins: ["typescript", "unicorn", "import", "vitest", "promise", "eslint"],
@@ -15,7 +15,7 @@ export default defineConfig({
         "**/.vscode/**",
         "**/.git/**",
     ],
-    extends: [config],
+    extends: [baseConfig()],
     rules: {
         "@typescript-eslint/require-await": "off",
 

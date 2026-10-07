@@ -1,7 +1,7 @@
-import { describe, expect, it } from "vitest";
-import { testClient } from "hono/testing";
-
 import { Hono } from "hono";
+import { testClient } from "hono/testing";
+import { describe, expect, it } from "vitest";
+
 import type { HonoEnv } from "@/types";
 import { cors } from "@/utils/cors";
 
@@ -34,9 +34,7 @@ describe("CORS middleware", () => {
         expect(resp.status).toBe(200);
         expect(resp.headers.get("Access-Control-Allow-Origin")).toBeNull();
     });
-    it.concurrent("should respond with 204 and correct headers on OPTIONS preflight", async ({
-        annotate,
-    }) => {
+    it.concurrent("should respond with 204 and correct headers on OPTIONS preflight", async () => {
         // Evil code... but it's required since options route is not registered (handled in middleware)
         const resp = await client.index.$options(
             {},
@@ -50,9 +48,6 @@ describe("CORS middleware", () => {
         );
 
         expect(resp.status).toBe(204);
-        await annotate(
-            resp.headers.get("Access-Control-Allow-Methods") ?? "null"
-        );
         expect(resp.headers.get("Access-Control-Allow-Methods")).toContain(
             "POST"
         );
