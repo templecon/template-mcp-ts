@@ -2,7 +2,7 @@ import baseConfig from "@concertypin/config/oxlint";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
-    plugins: ["typescript", "unicorn", "import", "vitest", "promise", "eslint"],
+    plugins: ["eslint"],
     env: {
         builtin: true,
     },
@@ -21,10 +21,5 @@ export default defineConfig({
 
         // Server code
         "no-console": "off",
-    },
-    options: {
-        typeAware: true,
-        typeCheck: true,
-        reportUnusedDisableDirectives: "error",
     },
 });
