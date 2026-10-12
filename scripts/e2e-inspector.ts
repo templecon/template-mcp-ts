@@ -5,7 +5,13 @@ const HOST = "127.0.0.1";
 const PORT = 5173;
 const BASE_URL = `http://${HOST}:${PORT}`;
 const MCP_ENDPOINT = `${BASE_URL}/mcp`;
-const PNPM = "pnpm";
+
+// On Windows pnpm is a .cmd shim, which spawn() cannot run without a shell.
+function pnpm(args: string[]): [command: string, args: string[]] {
+    return process.platform === "win32"
+        ? ["cmd.exe", ["/d", "/s", "/c", "pnpm", ...args]]
+        : ["pnpm", args];
+}
 
 type InspectorCheck = {
     name: string;
@@ -133,7 +139,7 @@ function runInspector(check: InspectorCheck) {
     ];
 
     console.log(`\n[inspector] ${check.name}`);
-    const result = spawnSync(PNPM, args, {
+    const result = spawnSync(...pnpm(args), {
         encoding: "utf8",
         stdio: "pipe",
     });
@@ -160,6 +166,12 @@ function runInspector(check: InspectorCheck) {
 async function waitForServer() {
     const deadline = Date.now() + 60_000;
     while (Date.now() < deadline) {
+        // Without this, a server already listening on the port would be tested instead.
+        if (devServer.exitCode !== null) {
+            throw new Error(
+                `Dev server exited with ${devServer.exitCode} before becoming ready`
+            );
+        }
         try {
             const response = await fetch(BASE_URL);
             if (response.ok) {
@@ -174,8 +186,7 @@ async function waitForServer() {
 }
 
 const devServer = spawn(
-    PNPM,
-    ["dev", "--host", HOST, "--port", String(PORT), "--strictPort"],
+    ...pnpm(["dev", "--host", HOST, "--port", String(PORT), "--strictPort"]),
     {
         env: {
             ...process.env,

@@ -47,9 +47,13 @@ const args = [
 console.log(`Launching MCP Inspector for: ${endpoint}`);
 console.log(`Tool: ${toolName}`);
 
-const child = spawn("pnpm", args, {
-    stdio: "inherit",
-});
+// On Windows pnpm is a .cmd shim, which spawn() cannot run without a shell.
+const child =
+    process.platform === "win32"
+        ? spawn("cmd.exe", ["/d", "/s", "/c", "pnpm", ...args], {
+              stdio: "inherit",
+          })
+        : spawn("pnpm", args, { stdio: "inherit" });
 
 child.on("error", (err) => {
     console.error("Failed to start inspector:", err);
