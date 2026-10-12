@@ -73,6 +73,16 @@ If you are using this repository as a template for a new project, refer to the "
 
 The MCP server is available at `/mcp`. Use an MCP client (like Claude Desktop or Claude Code) to connect and use the tools and prompts.
 
+The endpoint is stateless: every request gets a fresh server from `setup()` in `src/route.ts`. Both 2025-era and `2026-07-28` clients are accepted.
+
+<details>
+<summary>Not supported yet</summary>
+
+- **Change notifications** (`list_changed`, resource updates): the handler lives for one request, so there is nothing to publish to. See the comment in `src/index.ts` for what to change.
+- **Skills and Tasks extensions**: waiting for server-side SDK support ([typescript-sdk#2818](https://github.com/modelcontextprotocol/typescript-sdk/pull/2818), [typescript-sdk#2782](https://github.com/modelcontextprotocol/typescript-sdk/pull/2782)).
+
+</details>
+
 ## License
 
 MIT, see [LICENSE](./LICENSE) for details.
