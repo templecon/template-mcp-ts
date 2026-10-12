@@ -3,7 +3,7 @@
  * Wrap vitest to suppress sourcemap warnings about missing sources,
  * which are expected due to our dependencies and build setup.
  * Tracking:
- *   modelcontextprotocol/sdk — src/ not shipped to npm, .map files reference missing sources
+ *   @modelcontextprotocol/server, @modelcontextprotocol/client — src/ not shipped to npm, .map files reference missing sources
  *   https://github.com/vitejs/vite/issues/9825 (no universal sourcemap disable option)
  */
 
