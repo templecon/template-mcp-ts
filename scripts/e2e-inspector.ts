@@ -5,7 +5,24 @@ const HOST = "127.0.0.1";
 const PORT = 5173;
 const BASE_URL = `http://${HOST}:${PORT}`;
 const MCP_ENDPOINT = `${BASE_URL}/mcp`;
-const PNPM = "pnpm";
+
+// On Windows pnpm is a .cmd shim, which spawn() cannot run without a shell.
+// Every argument is double-quoted so cmd.exe treats & | ( ) and spaces literally.
+function pnpm(args: string[]): [command: string, args: string[]] {
+    if (process.platform !== "win32") {
+        return ["pnpm", args];
+    }
+    const quoted = args.map((arg) => {
+        if (arg.includes('"')) {
+            throw new Error(
+                `Cannot pass a double quote through cmd.exe: ${arg}`
+            );
+        }
+        // A trailing backslash would otherwise escape the closing quote.
+        return `"${arg.replace(/\\+$/, "$&$&")}"`;
+    });
+    return ["cmd.exe", ["/d", "/s", "/c", `"pnpm ${quoted.join(" ")}"`]];
+}
 
 type InspectorCheck = {
     name: string;
@@ -133,7 +150,8 @@ function runInspector(check: InspectorCheck) {
     ];
 
     console.log(`\n[inspector] ${check.name}`);
-    const result = spawnSync(PNPM, args, {
+    const result = spawnSync(...pnpm(args), {
+        windowsVerbatimArguments: true,
         encoding: "utf8",
         stdio: "pipe",
     });
@@ -160,6 +178,12 @@ function runInspector(check: InspectorCheck) {
 async function waitForServer() {
     const deadline = Date.now() + 60_000;
     while (Date.now() < deadline) {
+        // Without this, a server already listening on the port would be tested instead.
+        if (devServer.exitCode !== null) {
+            throw new Error(
+                `Dev server exited with ${devServer.exitCode} before becoming ready`
+            );
+        }
         try {
             const response = await fetch(BASE_URL);
             if (response.ok) {
@@ -174,13 +198,13 @@ async function waitForServer() {
 }
 
 const devServer = spawn(
-    PNPM,
-    ["dev", "--host", HOST, "--port", String(PORT), "--strictPort"],
+    ...pnpm(["dev", "--host", HOST, "--port", String(PORT), "--strictPort"]),
     {
         env: {
             ...process.env,
             CI: "1",
         },
+        windowsVerbatimArguments: true,
         detached: process.platform !== "win32",
         stdio: "inherit",
     }

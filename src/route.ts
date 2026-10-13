@@ -1,39 +1,29 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import * as z from "zod";
 
 import nplus1 from "./prompt/nplus1.md?raw";
 import type { Env } from "./types";
 
-let appSingleton: McpServer | null = null;
-let previousEnv: Env | null = null;
-
-function getStringEnv(obj: Record<string, unknown>): Record<string, string> {
-    return Object.fromEntries(
-        Object.entries(obj).filter(
-            (entry): entry is [string, string] => typeof entry[1] === "string"
-        )
-    );
-}
-function isCached(env: Env): boolean {
-    if (!appSingleton || !previousEnv) {
-        return false;
-    }
-
-    return (
-        JSON.stringify(getStringEnv(env)) ===
-        JSON.stringify(getStringEnv(previousEnv))
-    );
-}
-
+/**
+ * Builds a fresh MCP server. `createMcpHandler` calls this once per request,
+ * so don't keep per-connection state on the returned instance.
+ */
 export function setup(env: Env) {
-    if (isCached(env)) {
-        return appSingleton as McpServer;
-    }
-
-    const app = new McpServer({
-        name: "Example MCP Server",
-        version: "1.0.0",
-    });
+    const app = new McpServer(
+        {
+            name: "Example MCP Server",
+            version: "1.0.0",
+        },
+        {
+            // Registering a tool or prompt advertises `listChanged: true` by default,
+            // which makes clients open a subscription stream. The per-request handler
+            // in src/index.ts can never publish to it, so don't advertise it.
+            capabilities: {
+                prompts: { listChanged: false },
+                tools: { listChanged: false },
+            },
+        }
+    );
 
     const inputSchema = z.object({
         name: z.string().default("Claude-chan"),
@@ -107,7 +97,6 @@ export function setup(env: Env) {
         {
             description:
                 "Makes tests for N+1 query issues in Java Spring applications.",
-            argsSchema: z.object({}).shape,
             title: "N+1 Query Test Generator",
         },
         async () => {
@@ -126,7 +115,5 @@ export function setup(env: Env) {
         }
     );
 
-    appSingleton = app;
-    previousEnv = env;
     return app;
 }

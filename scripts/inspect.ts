@@ -47,7 +47,26 @@ const args = [
 console.log(`Launching MCP Inspector for: ${endpoint}`);
 console.log(`Tool: ${toolName}`);
 
-const child = spawn("pnpm", args, {
+// On Windows pnpm is a .cmd shim, which spawn() cannot run without a shell.
+// Every argument is double-quoted so cmd.exe treats & | ( ) and spaces literally.
+function pnpm(pnpmArgs: string[]): [command: string, args: string[]] {
+    if (process.platform !== "win32") {
+        return ["pnpm", pnpmArgs];
+    }
+    const quoted = pnpmArgs.map((arg) => {
+        if (arg.includes('"')) {
+            throw new Error(
+                `Cannot pass a double quote through cmd.exe: ${arg}`
+            );
+        }
+        // A trailing backslash would otherwise escape the closing quote.
+        return `"${arg.replace(/\\+$/, "$&$&")}"`;
+    });
+    return ["cmd.exe", ["/d", "/s", "/c", `"pnpm ${quoted.join(" ")}"`]];
+}
+
+const child = spawn(...pnpm(args), {
+    windowsVerbatimArguments: true,
     stdio: "inherit",
 });
 
