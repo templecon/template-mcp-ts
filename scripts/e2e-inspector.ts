@@ -7,10 +7,21 @@ const BASE_URL = `http://${HOST}:${PORT}`;
 const MCP_ENDPOINT = `${BASE_URL}/mcp`;
 
 // On Windows pnpm is a .cmd shim, which spawn() cannot run without a shell.
+// Every argument is double-quoted so cmd.exe treats & | ( ) and spaces literally.
 function pnpm(args: string[]): [command: string, args: string[]] {
-    return process.platform === "win32"
-        ? ["cmd.exe", ["/d", "/s", "/c", "pnpm", ...args]]
-        : ["pnpm", args];
+    if (process.platform !== "win32") {
+        return ["pnpm", args];
+    }
+    const quoted = args.map((arg) => {
+        if (arg.includes('"')) {
+            throw new Error(
+                `Cannot pass a double quote through cmd.exe: ${arg}`
+            );
+        }
+        // A trailing backslash would otherwise escape the closing quote.
+        return `"${arg.replace(/\\+$/, "$&$&")}"`;
+    });
+    return ["cmd.exe", ["/d", "/s", "/c", `"pnpm ${quoted.join(" ")}"`]];
 }
 
 type InspectorCheck = {
@@ -140,6 +151,7 @@ function runInspector(check: InspectorCheck) {
 
     console.log(`\n[inspector] ${check.name}`);
     const result = spawnSync(...pnpm(args), {
+        windowsVerbatimArguments: true,
         encoding: "utf8",
         stdio: "pipe",
     });
@@ -192,6 +204,7 @@ const devServer = spawn(
             ...process.env,
             CI: "1",
         },
+        windowsVerbatimArguments: true,
         detached: process.platform !== "win32",
         stdio: "inherit",
     }
