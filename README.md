@@ -26,17 +26,11 @@ This template includes example MCP implementations:
 ## Requirements
 
 - Node.js 26 or later
-- pnpm, at the version pinned in the `packageManager` field of `package.json`
+- pnpm
 
 ## Getting Started
 
-Node.js 26 no longer bundles Corepack, so install pnpm once with npm:
-
-```sh
-npm install -g pnpm@10.17.1
-```
-
-Then install dependencies and start developing:
+Install dependencies and start developing:
 
 ```sh
 # Install dependencies
